@@ -8,9 +8,9 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
+    "server": "node src/server/index.js",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist",
-    "server": "node src/server/index.js"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.4",
