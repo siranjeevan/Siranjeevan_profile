@@ -5,4 +5,10 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   base: process.env.NODE_ENV === 'production' ? '/Jeevith-portfolio/' : '/',
+  build: {
+    target: 'esnext'
+  },
+  esbuild: {
+    target: 'esnext'
+  }
 })

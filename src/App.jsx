@@ -9,7 +9,7 @@ import "./index.css";
 
 export default function App() {
   return (
-    <Router basename="/Jeevith-portfolio">
+    <Router basename={process.env.NODE_ENV === 'production' ? '/Jeevith-portfolio' : ''}>
       <Routes>
         <Route path="/" element={<HomeScreen />} />
         <Route path="/About" element={<AboutPage />} />
