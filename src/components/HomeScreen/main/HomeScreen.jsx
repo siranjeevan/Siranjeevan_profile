@@ -14,6 +14,10 @@ import SpotifyCard from "../SpotifyCard";
 import { FaGithub, FaLinkedin, FaDiscord, FaEnvelope } from 'react-icons/fa';
 import { SiX } from 'react-icons/si';
 
+
+
+
+
 export default function HomeScreen() {
   const navigate = useNavigate();
   
