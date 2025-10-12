@@ -225,8 +225,8 @@ const AboutPage = () => {
             >
               <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
                 {[
-                  { number: '50+', label: 'Projects Built' },
-                  { number: '3+', label: 'Years Experience' },
+                  { number: '10+', label: 'Personal Projects Built' },
+                  { number: '1+', label: 'Years Experience' },
                   { number: '15+', label: 'Technologies' },
                   { number: '100%', label: 'Passion' }
                 ].map((stat, index) => (
