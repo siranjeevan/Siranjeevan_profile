@@ -152,13 +152,13 @@ const ProjectsPage = () => {
         </motion.div>
       </section>
       
-      <Dock 
+      {/* <Dock 
         className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50"
         items={items}
         panelHeight={68}
         baseItemSize={50}
         magnification={70}
-      />
+      /> */}
       <TargetCursor />
     </>
   );
