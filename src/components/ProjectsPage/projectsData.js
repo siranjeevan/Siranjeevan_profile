@@ -38,7 +38,7 @@ export const projectsData = [
     id: 4,
     title: "Quiz Game",
     description: "A React-based quiz game with dynamic questions and real-time score updates. Styled using Tailwind CSS for a clean UI.",
-    image: QuizGame, // Use a real image or local asset like: require('../assets/quizgame.png')
+    image: QuizGame, // Use a real image or local asset like: require('../assets/quizGame.png')
     tech: ["React", "Tailwind CSS", "JavaScript"],
     liveLink: "https://siranjeevan.github.io/quizGame/",
     githubLink: "https://github.com/siranjeevan/quizGame"
@@ -56,7 +56,7 @@ export const projectsData = [
     id: 6,
     title: "Saree Shopping App",
     description: "A modern e-commerce web app for saree collections built with React. Features smooth Tailwind CSS and motion animations for an interactive experience.",
-    image: Saree, // Use a real image or local asset like: require('../assets/sareeapp.png')
+    image: Saree, // Use a real image or local asset like: require('../assets/sareeApp.png')
     tech: ["React", "Tailwind CSS", " Motion", "JavaScript"],
     liveLink: "https://siranjeevan.github.io/saree/", // update if you have a new live link
     githubLink: "https://github.com/siranjeevan/saree"
