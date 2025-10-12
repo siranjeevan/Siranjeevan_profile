@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope, FaArrowUp } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope, FaArrowUp , FaInstagram } from 'react-icons/fa';
 
 const containerVariants = {
   hidden: { opacity: 0, y: 100 },
@@ -32,9 +32,9 @@ const Footer = () => {
 
   const socialLinks = [
     { icon: <FaGithub />, href: "https://github.com/siranjeevan", label: "GitHub", color: "#333333" },
-    { icon: <FaLinkedin />, href: "https://linkedin.com/in/jeevith", label: "LinkedIn", color: "#0077B5" },
-    { icon: <FaTwitter />, href: "https://twitter.com/jeevith", label: "Twitter", color: "#1DA1F2" },
-    { icon: <FaEnvelope />, href: "mailto:jeevith@example.com", label: "Email", color: "#EA4335" },
+    { icon: <FaLinkedin />, href: "https://www.linkedin.com/in/siranjeevan-c-b0540b307/", label: "LinkedIn", color: "#0077B5" },
+    { icon: <FaInstagram />, href: "https://www.instagram.com/heartless_jeevith/", label: "Instagram", color: "#1DA1F2" },
+    { icon: <FaEnvelope />, href: "mailto:smartjeevith2k@gmail.com", label: "Email", color: "#EA4335" },
   ];
 
   const scrollToTop = () => {

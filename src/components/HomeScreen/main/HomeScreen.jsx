@@ -11,11 +11,8 @@ import TypingResultCard from "../Typing";
 import Github from "../Github"
 import LogoLoop from "../LogoLoopLayout";
 import SpotifyCard from "../SpotifyCard";
-import { FaGithub, FaLinkedin, FaDiscord, FaEnvelope } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from 'react-icons/fa';
 import { SiX } from 'react-icons/si';
-
-
-
 
 
 export default function HomeScreen() {
@@ -102,13 +99,13 @@ export default function HomeScreen() {
           {/* Floating Stats */}
           <div className="flex gap-6 mb-8">
             <div className="text-center">
-              <div className="text-3xl font-black text-violet-600 mb-1 animate-pulse">3+</div>
+              <div className="text-3xl font-black text-violet-600 mb-1 animate-pulse">1+</div>
               <div className="text-xs text-slate-700 uppercase tracking-widest">Years</div>
             </div>
             <div className="w-px h-12 bg-gradient-to-b from-transparent via-slate-400 to-transparent"></div>
             <div className="text-center">
-              <div className="text-3xl font-black text-fuchsia-600 mb-1 animate-pulse" style={{animationDelay: '0.5s'}}>50+</div>
-              <div className="text-xs text-slate-700 uppercase tracking-widest">Projects</div>
+              <div className="text-3xl font-black text-fuchsia-600 mb-1 animate-pulse" style={{animationDelay: '0.5s'}}>10+</div>
+              <div className="text-xs text-slate-700 uppercase tracking-widest"> Personal Projects</div>
             </div>
             <div className="w-px h-12 bg-gradient-to-b from-transparent via-slate-400 to-transparent"></div>
             <div className="text-center">
@@ -119,19 +116,19 @@ export default function HomeScreen() {
           
           {/* Social Links - Horizontal Layout */}
           <div className="flex gap-6 mb-10">
+            <a href="https://www.instagram.com/heartless_jeevith/" className="group relative w-14 h-14 bg-gradient-to-br from-pink-500/80 to-purple-500/60 backdrop-blur-xl rounded-2xl flex items-center justify-center border border-pink-400/50 hover:border-purple-600/70 transition-all duration-500 hover:scale-125 hover:-translate-y-2 shadow-xl hover:shadow-2xl">
+                <FaInstagram size={22} className="text-white group-hover:text-white transition-all duration-300 group-hover:scale-110" />
+                <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/30 via-pink-500/30 to-purple-500/30 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </a>
             <a href="https://github.com/siranjeevan" className="group relative w-14 h-14 bg-gradient-to-br from-slate-200/80 to-slate-300/60 backdrop-blur-xl rounded-2xl flex items-center justify-center border border-slate-400/50 hover:border-slate-600/70 transition-all duration-500 hover:scale-125 hover:-translate-y-2 shadow-xl hover:shadow-2xl">
               <FaGithub size={22} className="text-slate-700 group-hover:text-slate-900 transition-all duration-300 group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-br from-slate-600/10 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </a>
-            <a href="https://linkedin.com/in/siranjeevan" className="group relative w-14 h-14 bg-gradient-to-br from-blue-100/80 to-blue-200/60 backdrop-blur-xl rounded-2xl flex items-center justify-center border border-blue-400/50 hover:border-blue-600/70 transition-all duration-500 hover:scale-125 hover:-translate-y-2 shadow-xl hover:shadow-blue-500/30">
+            <a href="https://www.linkedin.com/in/siranjeevan-c-b0540b307/" className="group relative w-14 h-14 bg-gradient-to-br from-blue-100/80 to-blue-200/60 backdrop-blur-xl rounded-2xl flex items-center justify-center border border-blue-400/50 hover:border-blue-600/70 transition-all duration-500 hover:scale-125 hover:-translate-y-2 shadow-xl hover:shadow-blue-500/30">
               <FaLinkedin size={22} className="text-blue-600 group-hover:text-blue-800 transition-all duration-300 group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-br from-blue-400/20 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </a>
-            <a href="https://x.com/siranjeevan" className="group relative w-14 h-14 bg-gradient-to-br from-slate-200/80 to-slate-300/60 backdrop-blur-xl rounded-2xl flex items-center justify-center border border-slate-400/50 hover:border-slate-600/70 transition-all duration-500 hover:scale-125 hover:-translate-y-2 shadow-xl hover:shadow-2xl">
-              <SiX size={20} className="text-slate-700 group-hover:text-slate-900 transition-all duration-300 group-hover:scale-110" />
-              <div className="absolute inset-0 bg-gradient-to-br from-slate-600/10 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </a>
-            <a href="mailto:siranjeevan@example.com" className="group relative w-14 h-14 bg-gradient-to-br from-red-100/80 to-red-200/60 backdrop-blur-xl rounded-2xl flex items-center justify-center border border-red-400/50 hover:border-red-600/70 transition-all duration-500 hover:scale-125 hover:-translate-y-2 shadow-xl hover:shadow-red-500/30">
+            <a href="mailto:smartjeevith2k@gmail.com" className="group relative w-14 h-14 bg-gradient-to-br from-red-100/80 to-red-200/60 backdrop-blur-xl rounded-2xl flex items-center justify-center border border-red-400/50 hover:border-red-600/70 transition-all duration-500 hover:scale-125 hover:-translate-y-2 shadow-xl hover:shadow-red-500/30">
               <FaEnvelope size={20} className="text-red-600 group-hover:text-red-800 transition-all duration-300 group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-br from-red-400/20 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </a>
@@ -169,16 +166,17 @@ export default function HomeScreen() {
           
           {/* Social Links - Desktop Vertical */}
           <div className="fixed right-4 top-1/2 transform -translate-y-1/2 z-30 flex flex-col gap-3">
+          
             <a href="https://github.com/siranjeevan" className="w-12 h-12 bg-black/20 backdrop-blur-md rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-[#baa794]/30 transition-all duration-300 hover:scale-110 shadow-lg">
               <FaGithub size={20} />
             </a>
-            <a href="https://linkedin.com/in/siranjeevan" className="w-12 h-12 bg-black/20 backdrop-blur-md rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-[#0077b5]/30 transition-all duration-300 hover:scale-110 shadow-lg">
+            <a href="https://www.linkedin.com/in/siranjeevan-c-b0540b307/" className="w-12 h-12 bg-black/20 backdrop-blur-md rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-[#0077b5]/30 transition-all duration-300 hover:scale-110 shadow-lg">
               <FaLinkedin size={20} />
             </a>
-            <a href="https://x.com/siranjeevan" className="w-12 h-12 bg-black/20 backdrop-blur-md rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/20 transition-all duration-300 hover:scale-110 shadow-lg">
-              <SiX size={18} />
+            <a href="https://www.instagram.com/heartless_jeevith/" className="w-12 h-12 bg-black/20 backdrop-blur-md rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-[#E1306C]/30 transition-all duration-300 hover:scale-110 shadow-lg">
+              <FaInstagram size={20} />
             </a>
-            <a href="mailto:siranjeevan@example.com" className="w-12 h-12 bg-black/20 backdrop-blur-md rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-red-500/30 transition-all duration-300 hover:scale-110 shadow-lg">
+            <a href="mailto:smartjeevith2k@gmail.com" className="w-12 h-12 bg-black/20 backdrop-blur-md rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-red-500/30 transition-all duration-300 hover:scale-110 shadow-lg">
               <FaEnvelope size={18} />
             </a>
           </div>
@@ -244,7 +242,7 @@ export default function HomeScreen() {
       />
       
       {/* Floating Mobile Navigation */}
-      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 sm:hidden">
+      {/* <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 sm:hidden">
         <div className="bg-gradient-to-r from-slate-900/90 via-slate-800/90 to-slate-900/90 backdrop-blur-2xl rounded-2xl border border-slate-600/50 shadow-2xl px-2 py-2">
           <div className="flex gap-1">
             {items.map((item, index) => (
@@ -264,7 +262,7 @@ export default function HomeScreen() {
             ))}
           </div>
         </div>
-      </div>
+      </div> */}
       
       <TargetCursor />
     </div>

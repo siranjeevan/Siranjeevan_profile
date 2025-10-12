@@ -15,6 +15,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { useTouch } from "../../../hooks/useTouch";
 
 function DockItem({
   children,
@@ -28,6 +29,7 @@ function DockItem({
 }) {
   const ref = useRef(null);
   const isHovered = useMotionValue(0);
+  const isTouchDevice = useTouch();
 
   const mouseDistance = useTransform(mouseX, (val) => {
     const rect = ref.current?.getBoundingClientRect() ?? {
@@ -47,12 +49,15 @@ function DockItem({
   return (
     <motion.div
       ref={ref}
-      style={{
+      style={isTouchDevice ? {
+        width: baseItemSize,
+        height: baseItemSize,
+      } : {
         width: size,
         height: size,
       }}
-      onHoverStart={() => isHovered.set(1)}
-      onHoverEnd={() => isHovered.set(0)}
+      onHoverStart={!isTouchDevice ? () => isHovered.set(1) : undefined}
+      onHoverEnd={!isTouchDevice ? () => isHovered.set(0) : undefined}
       onFocus={() => isHovered.set(1)}
       onBlur={() => isHovered.set(0)}
       onClick={onClick}
@@ -60,6 +65,11 @@ function DockItem({
       tabIndex={0}
       role="button"
       aria-haspopup="true"
+      animate={isTouchDevice ? {
+        scale: [1, 1.1, 1],
+        transition: { duration: 2, repeat: Infinity, ease: "easeInOut" }
+      } : {}}
+      whileTap={{ scale: 0.9 }}
     >
       {Children.map(children, (child) =>
         cloneElement(child, { isHovered })
@@ -117,6 +127,7 @@ export default function Dock({
 }) {
   const mouseX = useMotionValue(Infinity);
   const isHovered = useMotionValue(0);
+  const isTouchDevice = useTouch();
 
   const maxHeight = useMemo(
     () => Math.max(dockHeight, magnification + magnification / 2 + 4),
@@ -131,14 +142,14 @@ export default function Dock({
       className="mx-2 flex max-w-full items-center"
     >
       <motion.div
-        onMouseMove={({ pageX }) => {
+        onMouseMove={!isTouchDevice ? ({ pageX }) => {
           isHovered.set(1);
           mouseX.set(pageX);
-        }}
-        onMouseLeave={() => {
+        } : undefined}
+        onMouseLeave={!isTouchDevice ? () => {
           isHovered.set(0);
           mouseX.set(Infinity);
-        }}
+        } : undefined}
         className={`${className} absolute bottom-2 left-1/2 transform -translate-x-1/2 flex items-end w-fit gap-4 rounded-2xl border-neutral-700 border-2 pb-2 px-4`}
         style={{ height: panelHeight }}
         role="toolbar"

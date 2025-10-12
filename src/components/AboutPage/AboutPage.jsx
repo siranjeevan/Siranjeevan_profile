@@ -168,15 +168,15 @@ const AboutPage = () => {
                       
                       {/* Content */}
                       <div className="relative h-full flex flex-col items-center justify-center p-6 text-center">
-                        <motion.div 
+                        <motion.div
                           className="text-5xl mb-4 filter drop-shadow-lg"
-                          whileHover={{ 
+                          whileHover={{
                             scale: 1.2,
                             rotate: [0, -10, 10, 0],
                             transition: { duration: 0.5 }
                           }}
                         >
-                          {['⚛️', '🚀', '🎨', '⚡', '💎', '🔧'][index] || '💻'}
+                          {skill.icon}
                         </motion.div>
                         
                         <h3 className="text-lg font-bold bg-gradient-to-r from-orange-600 to-pink-600 bg-clip-text text-transparent mb-3">
@@ -274,10 +274,65 @@ const AboutPage = () => {
             {/* Compact Modern Card Layout */}
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 max-w-6xl mx-auto">
               {[
-                { year: '2021', icon: '🌱', title: 'Foundation Era', description: 'Started with web fundamentals and built interactive experiences', skills: ['HTML5', 'CSS3', 'JavaScript', 'Bootstrap', 'jQuery'], color: 'from-emerald-400 to-teal-500', achievements: ['First Portfolio', '10+ Static Sites', 'CSS Animations'], progress: 85 },
-                { year: '2022', icon: '🚀', title: 'Framework Revolution', description: 'Embraced modern frameworks and component architecture', skills: ['React.js', 'Node.js', 'Express', 'Git', 'Webpack'], color: 'from-blue-400 to-cyan-500', achievements: ['SPA Development', 'API Integration', 'State Management'], progress: 90 },
-                { year: '2023', icon: '⚡', title: 'Full-Stack Mastery', description: 'Expanded to full-stack with modern tools and databases', skills: ['Next.js', 'TypeScript', 'MongoDB', 'Tailwind', 'Prisma'], color: 'from-purple-400 to-violet-500', achievements: ['E-commerce Apps', 'Real-time Features', 'Database Design'], progress: 95 },
-                { year: '2024', icon: '🎯', title: 'Innovation & Scale', description: 'Exploring AI, cloud technologies and scalable architectures', skills: ['AI/ML', 'Docker', 'AWS', 'GraphQL', 'Microservices'], color: 'from-pink-400 to-rose-500', achievements: ['AI Integration', 'Cloud Deployment', 'Performance Optimization'], progress: 100 }
+                { year: '2024 ', icon: '🌱', title: 'Foundation Era', description: 'Started with web fundamentals and built interactive experiences', skills: ['HTML5', 'CSS3', 'JavaScript', 'Bootstrap'], color: 'from-emerald-400 to-teal-500', achievements: ['First Portfolio', '10+ Static Sites', 'CSS Animations'], progress: 85 },
+                {
+                  year: '2024', icon: '💻', title: 'System Programming Exploration',
+                  description: 'Started learning low-level programming and mastering C language fundamentals',
+                  skills: ['C', 'Pointers'],
+                  color: 'from-green-400 to-emerald-500',
+                  achievements: ['C Language Basics', 'Problem Solving with C', 'Understanding Memory and Pointers'],
+                  progress: 75
+                },
+                {
+                  year: '2024',
+                  icon: '📱',
+                  title: 'iOS Development Journey',
+                  description: 'Dived into Swift and built apps for iOS with modern UI and data persistence',
+                  skills: ['Swift', 'SwiftUI', 'Xcode', 'Firebase', 'SwiftData'],
+                  color: 'from-orange-400 to-pink-500',
+                  achievements: ['iOS App Development', 'SwiftUI Components', 'Local Data Persistence'],
+                  progress: 85
+                },
+                {
+                  year: '2025',
+                  icon: '🧠',
+                  title: 'Advanced Programming with C++',
+                  description: 'Diving deep into object-oriented and high-performance programming with C++',
+                  skills: ['C++', 'OOP', 'STL', 'Data Structures', 'Algorithms'],
+                  color: 'from-indigo-400 to-blue-600',
+                  achievements: ['OOP Mastery', 'Algorithm Optimization', 'Competitive Programming'],
+                  progress: 80
+                },
+                {
+                  year: '2025',
+                  icon: '🧩',
+                  title: 'Data Structures & Algorithms',
+                  description: 'Mastering core computer science concepts for efficient problem-solving and optimization',
+                  skills: ['Arrays', 'Linked Lists', 'Stacks', 'Queues', 'Trees', 'Graphs', 'Sorting & Searching'],
+                  color: 'from-teal-400 to-emerald-600',
+                  achievements: ['Algorithmic Thinking', 'Code Optimization', 'Competitive Problem Solving'],
+                  progress: 90
+                },
+                {
+                  year: '2025',
+                  icon: '⚛️',
+                  title: 'Frontend Evolution with React & Tailwind CSS',
+                  description: 'Building fast, responsive, and elegant UIs with React components and Tailwind styling',
+                  skills: ['React.js', 'Tailwind CSS', 'Vite', 'Hooks', 'Context API'],
+                  color: 'from-sky-400 to-blue-600',
+                  achievements: ['Responsive UI Design', 'Reusable Components', 'Modern Frontend Architecture'],
+                  progress: 95
+                },
+                {
+                  year: '2025',
+                  icon: '🛠️',
+                  title: 'Real-World React Projects',
+                  description: 'Applying React skills to build full-featured, production-ready applications',
+                  skills: ['React.js', 'Tailwind CSS', 'React Router', 'Axios', 'State Management', 'Git'],
+                  color: 'from-indigo-400 to-purple-500',
+                  achievements: ['Portfolio Website', 'E-commerce App', 'Dashboard & Admin Panel', 'API Integration'],
+                  progress: 100
+                }
               ].map((phase, index) => (
                 <motion.div
                   key={phase.year}
