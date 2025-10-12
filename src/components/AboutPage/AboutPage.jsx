@@ -525,41 +525,6 @@ const AboutPage = () => {
                 </motion.div>
               ))}
             </div>
-            
-            {/* Bottom summary */}
-            <motion.div 
-              className="mt-20 text-center"
-              initial={{ opacity: 0, y: 50 }}
-              animate={isStoryInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: 1.5 }}
-            >
-              <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 border border-white/50 shadow-xl max-w-2xl mx-auto">
-                <h3 className="text-2xl font-bold bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent mb-4">
-                  The Journey Continues
-                </h3>
-                <p className="text-gray-700 leading-relaxed">
-                  From humble beginnings with HTML to exploring AI and cloud technologies, 
-                  every step has been a building block towards creating meaningful digital experiences.
-                </p>
-                
-                {/* Floating icons */}
-                <div className="flex justify-center gap-4 mt-6">
-                  {['🚀', '✨', '🌱', '🏆'].map((icon, index) => (
-                    <motion.div
-                      key={icon}
-                      className="text-3xl"
-                      whileHover={{ scale: 1.3, rotate: 360 }}
-                      transition={{ duration: 0.5 }}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={isStoryInView ? { opacity: 1, y: 0 } : {}}
-                      style={{ animationDelay: `${1.8 + index * 0.1}s` }}
-                    >
-                      {icon}
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
           </div>
         </motion.section>
       </div>
