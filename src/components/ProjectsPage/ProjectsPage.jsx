@@ -2,16 +2,12 @@
 
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { projectsData } from './projectsData';
 import ProjectCard from './ProjectCard';
 import ProjectsBackground from '../AnimatedBackground/ProjectsBackground';
-import Dock from '../Animations/Dock/Dock';
 import TargetCursor from '../Animations/TargetCursor/TargetCursor';
-import { VscHome, VscArchive, VscAccount, VscSettingsGear } from 'react-icons/vsc';
 
-// Modern Animation Variants
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -81,26 +77,96 @@ const ProjectsPage = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const navigate = useNavigate();
-  
-  const items = [
-    { icon: <VscHome size={18} color="white" />, label: 'Home', onClick: () => navigate('/') },
-    { icon: <VscArchive size={18} color="white"/>, label: 'Projects', onClick: () => navigate('/projects') },
-    { icon: <VscAccount size={18} color="white" />, label: 'Profile', onClick: () => alert('Profile!') },
-    { icon: <VscSettingsGear size={18} color="white" />, label: 'Settings', onClick: () => alert('Settings!') },
-  ];
+  const [projectsData, setProjectsData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    let isMounted = true;
+    
+    const fetchProjects = async (retryCount = 0) => {
+      try {
+        setError(null);
+        const response = await fetch('https://sheetdb.io/api/v1/hz7g37nmzo8it', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        if (!isMounted) return;
+        
+        if (!Array.isArray(data) || data.length === 0) {
+          throw new Error('No data received');
+        }
+        
+        const formattedData = data.map((item, index) => {
+          const cleanText = (text) => {
+            if (!text) return '';
+            return text.replace(/&#39;/g, "'").replace(/&quot;/g, '"').replace(/&amp;/g, '&').trim();
+          };
+          
+          const techString = cleanText(item['Tech stack'] || '');
+          const techArray = techString.split(',').map(tech => tech.trim().replace(/^"|"$/g, '')).filter(tech => tech);
+          
+          return {
+            id: index + 1,
+            title: cleanText(item['Project Name']),
+            description: cleanText(item['Description']),
+            image: cleanText(item['ImageLink']) || `https://picsum.photos/400/300?random=${index}`,
+            tech: techArray,
+            liveLink: cleanText(item['Live Demo '] || item['Live Demo']),
+            githubLink: cleanText(item['Github Link '] || item['Github Link'])
+          };
+        });
+        
+        if (isMounted) {
+          setProjectsData(formattedData);
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error('Error fetching projects:', error);
+        if (isMounted) {
+          if (retryCount < 2) {
+            setTimeout(() => fetchProjects(retryCount + 1), 1000);
+          } else {
+            setError(error.message);
+            setLoading(false);
+          }
+        }
+      }
+    };
+
+    fetchProjects();
+    
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const handleRetry = () => {
+    setLoading(true);
+    setError(null);
+    window.location.reload();
+  };
 
   return (
     <>
       <ProjectsBackground />
 
-      <section ref={ref} id="projects" className="relative py-20 px-5 sm:px-10 lg:px-20 bg-gradient-to-br from-[#baa794]/10 via-[#8b7355]/5 to-[#6d5a42]/10 backdrop-blur-sm">
+      <section ref={ref} id="projects" className="relative py-20 px-5 sm:px-10 lg:px-20 bg-gradient-to-br from-[#baa794]/10 via-[#8b7355]/5 to-[#6d5a42]/10 backdrop-blur-sm min-h-screen">
         <motion.div
           className="max-w-7xl mx-auto"
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
           variants={containerVariants}
         >
-          {/* Floating decorative elements */}
           <motion.div 
             className="absolute top-20 left-10 w-20 h-20 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full blur-xl opacity-20"
             variants={floatingVariants}
@@ -113,7 +179,6 @@ const ProjectsPage = () => {
             style={{ animationDelay: "2s" }}
           />
           
-          {/* Modern Page Title */}
           <motion.div className="text-center mb-20" variants={titleVariants}>
             <motion.h2
               className="text-6xl sm:text-7xl font-black bg-gradient-to-r from-[#baa794] to-[#8b7355] bg-clip-text text-transparent mb-6"
@@ -138,27 +203,46 @@ const ProjectsPage = () => {
             </motion.p>
           </motion.div>
 
-          {/* Project Cards Grid */}
           <motion.div 
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 perspective-1000"
             style={{ perspective: "1000px" }}
           >
-            {projectsData.map((project) => (
-              <motion.div key={project.id} variants={itemVariants}>
-                <ProjectCard project={project} />
-              </motion.div>
-            ))}
+            {loading ? (
+              <div className="col-span-full text-center text-[#6d5a42] text-xl py-20">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#6d5a42] mx-auto mb-4"></div>
+                Loading projects...
+              </div>
+            ) : error ? (
+              <div className="col-span-full text-center text-[#6d5a42] text-xl py-20">
+                <p className="mb-4">Failed to load projects: {error}</p>
+                <button 
+                  onClick={handleRetry}
+                  className="px-6 py-3 bg-[#baa794] text-white rounded-lg hover:bg-[#8b7355] transition-colors"
+                >
+                  Retry
+                </button>
+              </div>
+            ) : projectsData.length === 0 ? (
+              <div className="col-span-full text-center text-[#6d5a42] text-xl py-20">
+                <p className="mb-4">No projects found</p>
+                <button 
+                  onClick={handleRetry}
+                  className="px-6 py-3 bg-[#baa794] text-white rounded-lg hover:bg-[#8b7355] transition-colors"
+                >
+                  Refresh
+                </button>
+              </div>
+            ) : (
+              projectsData.map((project) => (
+                <motion.div key={project.id} variants={itemVariants}>
+                  <ProjectCard project={project} />
+                </motion.div>
+              ))
+            )}
           </motion.div>
         </motion.div>
       </section>
       
-      {/* <Dock 
-        className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50"
-        items={items}
-        panelHeight={68}
-        baseItemSize={50}
-        magnification={70}
-      /> */}
       <TargetCursor />
     </>
   );
