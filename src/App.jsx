@@ -9,7 +9,7 @@ import "./index.css";
 
 export default function App() {
   return (
-    <Router>
+    <Router basename="">
       <Routes>
         <Route path="/" element={<HomeScreen />} />
         <Route path="/About" element={<AboutPage />} />
