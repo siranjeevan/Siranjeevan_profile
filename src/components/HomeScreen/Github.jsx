@@ -19,11 +19,32 @@ export default function Github() {
   const [loading, setLoading] = useState(false);
 
   const username = "siranjeevan";
-  const token = import.meta.env.VITE_GITHUB_TOKEN; 
+  const token = import.meta.env.VITE_GITHUB_TOKEN;
+
+  // If no token, use fallback data immediately
+  if (!token) {
+    useEffect(() => {
+      const fallbackWeeks = [];
+      for (let w = 0; w < 52; w++) {
+        const week = { contributionDays: [] };
+        for (let d = 0; d < 7; d++) {
+          week.contributionDays.push({
+            date: new Date(Date.now() - (52 - w) * 7 * 24 * 60 * 60 * 1000 + d * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+            contributionCount: Math.floor(Math.random() * 5)
+          });
+        }
+        fallbackWeeks.push(week);
+      }
+      setWeeks(fallbackWeeks);
+      setMaxCount(4);
+    }, []);
+  } 
 
   const gridRef = useRef(null);
 
   useEffect(() => {
+    if (!token) return; // Skip if no token
+    
     async function fetchData() {
       setLoading(true);
 
