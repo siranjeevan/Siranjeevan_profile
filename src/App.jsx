@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 import HomeScreen from "./components/HomeScreen/main/HomeScreen";
 import ProjectsPage from "./components/ProjectsPage/ProjectsPage";
 import MentorPage from './components/MentorPage/MentorPage';
@@ -7,9 +8,20 @@ import DockNavbar from './components/DockNavbar/DockNavbar';
 import Footer from './components/Footer/Footer';
 import "./index.css";
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  
+  return null;
+}
+
 export default function App() {
   return (
     <Router basename="/Siranjeevan_profile">
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<HomeScreen />} />
         <Route path="/About" element={<AboutPage />} />
