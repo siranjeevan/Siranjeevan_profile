@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { projectsData as fallbackData } from './projectsData';
 import ProjectCard from './ProjectCard';
 import ProjectsBackground from '../AnimatedBackground/ProjectsBackground';
 import TargetCursor from '../Animations/TargetCursor/TargetCursor';
@@ -77,84 +78,36 @@ const ProjectsPage = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const navigate = useNavigate();
-  const [projectsData, setProjectsData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [projectsData, setProjectsData] = useState(fallbackData);
 
   useEffect(() => {
-    let isMounted = true;
-    
-    const fetchProjects = async (retryCount = 0) => {
+    const fetchProjects = async () => {
       try {
-        setError(null);
-        const response = await fetch('https://sheetdb.io/api/v1/hz7g37nmzo8it', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+        const apiUrl = 'https://script.googleusercontent.com/macros/echo?user_content_key=AehSKLiZ1fWXDNBgvoY4olIrs6fwuJzNsTPdTyCP8ZLxLkYx2T8Wk_O08XLHscJrburLtgXNRYAgK6KmXI23gAsqiEBPR6Ed35vAWkwjdu_X1T_4PZTRfR5U2Lhc2AQ9xQyU2xlG3NzK-VCvf4L19fmwrpeJ8TOSyHwqk1mj1Tz4ZMDeIuJMJpi2v-O188pLOD6Dnd1oaxbk6M_pW-GNxMIkegBqDjrFE7zps8WVPtPVelSf0zNmymKjqVYOGqkyUt22Bag-zoimvwchXZ2mqzvIZ1a1ntK7pQ&lib=MvvIVf4irKHNu4zNUrKMMXxmYa9l_pTPD';
+        const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(apiUrl)}`;
         
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
+        const response = await fetch(proxyUrl);
+        const result = await response.json();
+        const data = JSON.parse(result.contents);
         
-        const data = await response.json();
+        const formattedData = data.map((item, index) => ({
+          id: index + 1,
+          title: item['Project Name'],
+          description: item['Description'],
+          image: item['ImageLink'] || fallbackData[index]?.image,
+          tech: item['Tech stack'].split(',').map(t => t.trim().replace(/"/g, '')),
+          liveLink: item['Live Demo '] || '',
+          githubLink: item['Github Link '] || ''
+        }));
         
-        if (!isMounted) return;
-        
-        if (!Array.isArray(data) || data.length === 0) {
-          throw new Error('No data received');
-        }
-        
-        const formattedData = data.map((item, index) => {
-          const cleanText = (text) => {
-            if (!text) return '';
-            return text.replace(/&#39;/g, "'").replace(/&quot;/g, '"').replace(/&amp;/g, '&').trim();
-          };
-          
-          const techString = cleanText(item['Tech stack'] || '');
-          const techArray = techString.split(',').map(tech => tech.trim().replace(/^"|"$/g, '')).filter(tech => tech);
-          
-          return {
-            id: index + 1,
-            title: cleanText(item['Project Name']),
-            description: cleanText(item['Description']),
-            image: cleanText(item['ImageLink']) || `https://picsum.photos/400/300?random=${index}`,
-            tech: techArray,
-            liveLink: cleanText(item['Live Demo '] || item['Live Demo']),
-            githubLink: cleanText(item['Github Link '] || item['Github Link'])
-          };
-        });
-        
-        if (isMounted) {
-          setProjectsData(formattedData);
-          setLoading(false);
-        }
+        setProjectsData(formattedData);
       } catch (error) {
-        console.error('Error fetching projects:', error);
-        if (isMounted) {
-          if (retryCount < 2) {
-            setTimeout(() => fetchProjects(retryCount + 1), 1000);
-          } else {
-            setError(error.message);
-            setLoading(false);
-          }
-        }
+        console.log('API fetch failed, using fallback data:', error.message);
       }
     };
 
     fetchProjects();
-    
-    return () => {
-      isMounted = false;
-    };
   }, []);
-
-  const handleRetry = () => {
-    setLoading(true);
-    setError(null);
-    window.location.reload();
-  };
 
   return (
     <>
@@ -207,38 +160,11 @@ const ProjectsPage = () => {
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 perspective-1000"
             style={{ perspective: "1000px" }}
           >
-            {loading ? (
-              <div className="col-span-full text-center text-[#6d5a42] text-xl py-20">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#6d5a42] mx-auto mb-4"></div>
-                Loading projects...
-              </div>
-            ) : error ? (
-              <div className="col-span-full text-center text-[#6d5a42] text-xl py-20">
-                <p className="mb-4">Failed to load projects: {error}</p>
-                <button 
-                  onClick={handleRetry}
-                  className="px-6 py-3 bg-[#baa794] text-white rounded-lg hover:bg-[#8b7355] transition-colors"
-                >
-                  Retry
-                </button>
-              </div>
-            ) : projectsData.length === 0 ? (
-              <div className="col-span-full text-center text-[#6d5a42] text-xl py-20">
-                <p className="mb-4">No projects found</p>
-                <button 
-                  onClick={handleRetry}
-                  className="px-6 py-3 bg-[#baa794] text-white rounded-lg hover:bg-[#8b7355] transition-colors"
-                >
-                  Refresh
-                </button>
-              </div>
-            ) : (
-              projectsData.map((project) => (
-                <motion.div key={project.id} variants={itemVariants}>
-                  <ProjectCard project={project} />
-                </motion.div>
-              ))
-            )}
+            {projectsData.map((project) => (
+              <motion.div key={project.id} variants={itemVariants}>
+                <ProjectCard project={project} />
+              </motion.div>
+            ))}
           </motion.div>
         </motion.div>
       </section>
